@@ -1,11 +1,13 @@
 package com.stefanosilva.bibliaonline.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.stefanosilva.bibliaonline.domain.Book;
 import com.stefanosilva.bibliaonline.domain.Testament;
 
 public class BookDTO {
 private Integer id;
 	
+    @JsonIgnore
 	private Testament testament;
 	
 	private String name;

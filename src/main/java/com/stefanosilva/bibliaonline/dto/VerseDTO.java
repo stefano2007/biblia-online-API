@@ -1,5 +1,6 @@
 package com.stefanosilva.bibliaonline.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.stefanosilva.bibliaonline.domain.Book;
 import com.stefanosilva.bibliaonline.domain.Testament;
 import com.stefanosilva.bibliaonline.domain.Verse;
@@ -8,10 +9,10 @@ public class VerseDTO {
 
 private Integer id;
 	
-	private String name;
-
+	@JsonIgnore
 	private Testament testament;
 
+	@JsonIgnore
 	private Book book;
 	
 	private String version;
@@ -22,11 +23,10 @@ private Integer id;
 	
 	private String text;
 
-	public VerseDTO(Integer id, String name, Testament testament, Book book, String version, String chapter, String verse,
+	public VerseDTO(Integer id, Testament testament, Book book, String version, String chapter, String verse,
 			String text) {
 		super();
 		this.id = id;
-		this.name = name;
 		this.testament = testament;
 		this.book = book;
 		this.version = version;
@@ -39,7 +39,6 @@ private Integer id;
 	public VerseDTO(Verse obj) {
 		super();
 		this.id = obj.getId();
-		this.name = obj.getName();
 		this.testament = obj.getTestament();
 		this.book = obj.getBook();
 		this.version = obj.getVersion();
@@ -54,13 +53,7 @@ private Integer id;
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public Testament getTestament() {
+		public Testament getTestament() {
 		return testament;
 	}
 	public void setTestament(Testament testament) {

@@ -46,15 +46,15 @@ public class VerseService {
 	
 	public VerseDTO insert(VerseDTO dto) {
 		dto.setId(null);
-		Verse obj = new Verse(dto.getId(), dto.getName(), dto.getTestament(), 
-				dto.getBook(), dto.getVersion(), dto.getChapter(), dto.getVerse(), dto.getText());
+		Verse obj = new Verse(dto.getId(), dto.getTestament(), dto.getBook(),
+				 dto.getVersion(), dto.getChapter(), dto.getVerse(), dto.getText());
 		obj = repo.save(obj);		
 		
 		return new VerseDTO(obj);
 	}
 	
 	public Verse updateObj(Verse obj,VerseDTO dto) {
-		obj.setName(dto.getName());
+		obj.setVersion(dto.getVersion());
 		return obj;
 	}
 	

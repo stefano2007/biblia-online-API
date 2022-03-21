@@ -20,12 +20,11 @@ public class Verse implements Serializable{
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Integer id;
 	
-	private String name;
-
+	
 	@ManyToOne
 	@JoinColumn(name="testament")
 	private Testament testament;
-	
+		
 	@ManyToOne
 	@JoinColumn(name="book")
 	private Book book;
@@ -39,11 +38,10 @@ public class Verse implements Serializable{
 	@Column(length = 1000)
 	private String text;
 
-	public Verse(Integer id, String name, Testament testament, Book book, String version, String chapter, String verse,
+	public Verse(Integer id, Testament testament, Book book, String version, String chapter, String verse,
 			String text) {
 		super();
 		this.id = id;
-		this.name = name;
 		this.testament = testament;
 		this.book = book;
 		this.version = version;
@@ -57,12 +55,6 @@ public class Verse implements Serializable{
 	}
 	public void setId(Integer id) {
 		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
 	}
 	public Testament getTestament() {
 		return testament;
@@ -102,7 +94,7 @@ public class Verse implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "Verse [id=" + id + ", name=" + name + ", testament=" + testament + ", book=" + book + ", version="
+		return "Verse [id=" + id + ", testament=" + testament + ", book=" + book + ", version="
 				+ version + ", chapter=" + chapter + ", verse=" + verse + ", text=" + text + "]";
 	}
 	
