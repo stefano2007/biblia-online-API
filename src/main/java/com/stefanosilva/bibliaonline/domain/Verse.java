@@ -2,10 +2,12 @@ package com.stefanosilva.bibliaonline.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -21,9 +23,11 @@ public class Verse implements Serializable{
 	private String name;
 
 	@ManyToOne
+	@JoinColumn(name="testament")
 	private Testament testament;
 	
 	@ManyToOne
+	@JoinColumn(name="book")
 	private Book book;
 	
 	private String version;
@@ -32,6 +36,7 @@ public class Verse implements Serializable{
 	
 	private String verse;
 	
+	@Column(length = 1000)
 	private String text;
 
 	public Verse(Integer id, String name, Testament testament, Book book, String version, String chapter, String verse,
