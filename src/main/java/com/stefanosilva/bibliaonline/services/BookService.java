@@ -2,7 +2,6 @@ package com.stefanosilva.bibliaonline.services;
 
 import java.util.Optional;
 
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,7 +31,7 @@ public class BookService {
 			BookDTO dto = new BookDTO(obj.get());
 			return dto;
 		}
-		throw new   ObjectNotFoundException("Objeto nÃ£o encontrado! Id: " + id, null);
+		return null;
 	}
 	
 	public BookDTO update(BookDTO dto, Integer id) {

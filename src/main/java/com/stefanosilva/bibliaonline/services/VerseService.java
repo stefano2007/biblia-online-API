@@ -2,14 +2,11 @@ package com.stefanosilva.bibliaonline.services;
 
 import java.util.Optional;
 
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.stefanosilva.bibliaonline.domain.Book;
-import com.stefanosilva.bibliaonline.domain.Testament;
 import com.stefanosilva.bibliaonline.domain.Verse;
 import com.stefanosilva.bibliaonline.dto.VerseDTO;
 import com.stefanosilva.bibliaonline.repositories.VerseRepository;
@@ -34,7 +31,7 @@ public class VerseService {
 			VerseDTO dto = new VerseDTO(obj.get());
 			return dto;
 		}
-		throw new   ObjectNotFoundException("Objeto nÃ£o encontrado! Id: " + id, null);
+		return null;
 	}
 	
 	public VerseDTO update(VerseDTO dto, Integer id) {

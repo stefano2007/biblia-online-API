@@ -2,7 +2,6 @@ package com.stefanosilva.bibliaonline.services;
 
 import java.util.Optional;
 
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,13 +25,13 @@ public class TestamentService {
 	}
 	
 	public TestamentDTO findById(Integer id) {
-		Optional <Testament> obj = repo.findById(id);
+		Optional<Testament> obj = repo.findById(id);
 		
-		if (obj != null) {
+		if (obj.isEmpty()) {
 			TestamentDTO dto = new TestamentDTO(obj.get());
 			return dto;
 		}
-		throw new   ObjectNotFoundException("Objeto nÃ£o encontrado! Id: " + id, null);
+		return null;
 	}
 	
 	public TestamentDTO update(TestamentDTO dto, Integer id) {
