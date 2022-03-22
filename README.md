@@ -1,6 +1,6 @@
-# Bibila Online API
+# Biblia Online API
 
-API Rest no Spring boot com Java e JPA, banco de dados H2 no profile de test e MySQL profile dev e prod.
+API Rest Spring boot com Java e JPA, banco de dados H2 no profile de test e MySQL profile dev e prod.
 
 ## Objetivo 
 
