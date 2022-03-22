@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.stefanosilva.bibliaonline.domain.Testament;
-import com.stefanosilva.bibliaonline.dto.TestamentDTO;
 import com.stefanosilva.bibliaonline.repositories.TestamentRepository;
 
 @Service
@@ -17,44 +16,41 @@ public class TestamentService {
 	@Autowired
 	TestamentRepository repo;
 	
-	public Page<TestamentDTO> findAll(Pageable page ){
-		
-		Page<Testament> list = repo.findAll(page);		
-		Page<TestamentDTO> listDto = list.map(t -> new TestamentDTO(t));
-		return listDto;
+	public Page<Testament> findAll(Pageable page ){		
+		Page<Testament> list = repo.findAll(page);	
+		return list;
 	}
 	
-	public TestamentDTO findById(Integer id) {
+	public Testament findById(Integer id) {
 		Optional<Testament> obj = repo.findById(id);
 		
-		if (obj.isEmpty()) {
-			TestamentDTO dto = new TestamentDTO(obj.get());
-			return dto;
+		if (obj != null) {			
+			return obj.get();
 		}
 		return null;
 	}
-	
-	public TestamentDTO update(TestamentDTO dto, Integer id) {
+	/*
+	public Testament update(TestamentDTO dto, Integer id) {
 		dto.setId(id);
 		
 		Testament obj = repo.findById(id).get();
 		obj = updateObj(obj, dto);
 		obj = repo.save(obj);		
 		
-		return new TestamentDTO(obj);
+		return obj;
 	}
 	
-	public TestamentDTO insert(TestamentDTO dto) {
+	public Testament insert(TestamentDTO dto) {
 		dto.setId(null);
 		Testament obj = new Testament(dto.getId(), dto.getName());
 		obj = repo.save(obj);		
 		
-		return new TestamentDTO(obj);
+		return obj;
 	}
 	
 	public Testament updateObj(Testament obj,TestamentDTO dto) {
 		obj.setName(dto.getName());
 		return obj;
 	}
-	
+   */	
 }

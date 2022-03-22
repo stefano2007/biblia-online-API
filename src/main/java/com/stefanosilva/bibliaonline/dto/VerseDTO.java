@@ -1,19 +1,14 @@
 package com.stefanosilva.bibliaonline.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.stefanosilva.bibliaonline.domain.Book;
-import com.stefanosilva.bibliaonline.domain.Testament;
 import com.stefanosilva.bibliaonline.domain.Verse;
 
 public class VerseDTO {
 
 private Integer id;
 	
-	@JsonIgnore
-	private Testament testament;
+	private Integer testamentId;
 
-	@JsonIgnore
-	private Book book;
+	private Integer bookId;
 	
 	private String version;
 	
@@ -23,12 +18,12 @@ private Integer id;
 	
 	private String text;
 
-	public VerseDTO(Integer id, Testament testament, Book book, String version, String chapter, String verse,
+	public VerseDTO(Integer id, Integer testamentId, Integer bookId, String version, String chapter, String verse,
 			String text) {
 		super();
 		this.id = id;
-		this.testament = testament;
-		this.book = book;
+		this.testamentId = testamentId;
+		this.bookId = bookId;
 		this.version = version;
 		this.chapter = chapter;
 		this.verse = verse;
@@ -39,8 +34,8 @@ private Integer id;
 	public VerseDTO(Verse obj) {
 		super();
 		this.id = obj.getId();
-		this.testament = obj.getTestament();
-		this.book = obj.getBook();
+		this.testamentId = obj.getTestament().getId();
+		this.bookId = obj.getBook().getId();
 		this.version = obj.getVersion();
 		this.chapter = obj.getChapter();
 		this.verse = obj.getVerse();
@@ -52,18 +47,19 @@ private Integer id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}		
+
+	public Integer getTestamentId() {
+		return testamentId;
 	}
-		public Testament getTestament() {
-		return testament;
+	public void setTestamentId(Integer testamentId) {
+		this.testamentId = testamentId;
 	}
-	public void setTestament(Testament testament) {
-		this.testament = testament;
+	public Integer getBookId() {
+		return bookId;
 	}
-	public Book getBook() {
-		return book;
-	}
-	public void setBook(Book book) {
-		this.book = book;
+	public void setBookId(Integer bookId) {
+		this.bookId = bookId;
 	}
 	public String getVersion() {
 		return version;

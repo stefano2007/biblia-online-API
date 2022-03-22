@@ -1,22 +1,20 @@
 package com.stefanosilva.bibliaonline.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.stefanosilva.bibliaonline.domain.Book;
-import com.stefanosilva.bibliaonline.domain.Testament;
 
 public class BookDTO {
 private Integer id;
 	
-    @JsonIgnore
-	private Testament testament;
+    
+	private Integer testamentId;
 	
 	private String name;
 
 	private String abbrev;
 
-	public BookDTO(Integer id, Testament testament, String name, String abbrev) {
+	public BookDTO(Integer id, Integer testamentId, String name, String abbrev) {
 		this.id = id;
-		this.testament = testament;
+		this.testamentId = testamentId;
 		this.name = name;
 		this.abbrev = abbrev;
 	}
@@ -26,7 +24,7 @@ private Integer id;
 
 	public BookDTO(Book obj) {
 		this.id = obj.getId();
-		this.testament = obj.getTestament();
+		this.testamentId = obj.getTestament().getId();
 		this.name = obj.getName();
 		this.abbrev = obj.getAbbrev();
 	}
@@ -39,12 +37,12 @@ private Integer id;
 		this.id = id;
 	}
 
-	public Testament getTestament() {
-		return testament;
+	public Integer getTestamentId() {
+		return testamentId;
 	}
 
-	public void setTestament(Testament testament) {
-		this.testament = testament;
+	public void setTestamentId(Integer testamentId) {
+		this.testamentId = testamentId;
 	}
 
 	public String getName() {

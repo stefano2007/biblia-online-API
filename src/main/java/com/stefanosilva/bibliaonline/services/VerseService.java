@@ -1,5 +1,7 @@
 package com.stefanosilva.bibliaonline.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.stefanosilva.bibliaonline.domain.Verse;
-import com.stefanosilva.bibliaonline.dto.VerseDTO;
 import com.stefanosilva.bibliaonline.repositories.VerseRepository;
 
 @Service
@@ -16,46 +17,37 @@ public class VerseService {
 
 	@Autowired
 	VerseRepository repo;
-	
-	public Page<VerseDTO> findAll(Pageable page ){
-		
-		Page<Verse> list = repo.findAll(page);		
-		Page<VerseDTO> listDto = list.map(t -> new VerseDTO(t));
-		return listDto;
+
+	public Page<Verse> findAll(Pageable page) {
+
+		Page<Verse> list = repo.findAll(page);
+		return list;
 	}
-	
-	public VerseDTO findById(Integer id) {
-		Optional <Verse> obj = repo.findById(id);
-		
+
+	public Verse findById(Integer id) {
+		Optional<Verse> obj = repo.findById(id);
+
 		if (obj != null) {
-			VerseDTO dto = new VerseDTO(obj.get());
-			return dto;
+			return obj.get();
 		}
 		return null;
 	}
-	
-	public VerseDTO update(VerseDTO dto, Integer id) {
-		dto.setId(id);
+
+	public List<Verse> search(Integer testamentId, Integer bookId,  String chapter) {
+
+		List<Verse> list = new ArrayList<Verse>();
 		
-		Verse obj = repo.findById(id).get();
-		obj = updateObj(obj, dto);
-		obj = repo.save(obj);		
+		if(testamentId > 0 && bookId>0 && !chapter.isEmpty()) {
+			list = repo.searchByTestamentAndBookAndChapter(testamentId, bookId, chapter);
+		}
+		else if (testamentId > 0 && bookId>0)  {
+			list = repo.searchByTestamentAndBook(testamentId, bookId);
+		}
+		else if (testamentId > 0) {
+			list = repo.searchByTestament(testamentId);
+		}
 		
-		return new VerseDTO(obj);
+		return list;
 	}
-	
-	public VerseDTO insert(VerseDTO dto) {
-		dto.setId(null);
-		Verse obj = new Verse(dto.getId(), dto.getTestament(), dto.getBook(),
-				 dto.getVersion(), dto.getChapter(), dto.getVerse(), dto.getText());
-		obj = repo.save(obj);		
-		
-		return new VerseDTO(obj);
-	}
-	
-	public Verse updateObj(Verse obj,VerseDTO dto) {
-		obj.setVersion(dto.getVersion());
-		return obj;
-	}
-	
+
 }
