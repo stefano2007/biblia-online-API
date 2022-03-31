@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "Buscar todos books por testament",
+			"name": "Buscar todos books",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -28,7 +28,7 @@
 			"response": []
 		},
 		{
-			"name": "Buscar books por Id",
+			"name": "Buscar books por Testament",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -193,7 +193,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/v1/verses/search?testamentId=1&bookId=19",
+					"raw": "http://localhost:8080/v1/verses/charpters?testamentId=1&bookId=19 ",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -202,7 +202,7 @@
 					"path": [
 						"v1",
 						"verses",
-						"search"
+						"charpters"
 					],
 					"query": [
 						{
@@ -211,7 +211,7 @@
 						},
 						{
 							"key": "bookId",
-							"value": "19"
+							"value": "19 "
 						}
 					]
 				}
@@ -239,6 +239,37 @@
 						{
 							"key": "testamentId",
 							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar Charpters por Testament e book",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/books/charpters?testamentId=1&bookId=19",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"books",
+						"charpters"
+					],
+					"query": [
+						{
+							"key": "testamentId",
+							"value": "1"
+						},
+						{
+							"key": "bookId",
+							"value": "19"
 						}
 					]
 				}

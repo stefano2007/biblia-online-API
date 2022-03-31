@@ -33,11 +33,11 @@ public class VerseService {
 		return null;
 	}
 
-	public List<Verse> search(Integer testamentId, Integer bookId,  String chapter) {
+	public List<Verse> search(Integer testamentId, Integer bookId,  Integer chapter) {
 
 		List<Verse> list = new ArrayList<Verse>();
 		
-		if(testamentId > 0 && bookId>0 && !chapter.isEmpty()) {
+		if(testamentId > 0 && bookId > 0 && chapter > 0 ) {
 			list = repo.searchByTestamentAndBookAndChapter(testamentId, bookId, chapter);
 		}
 		else if (testamentId > 0 && bookId>0)  {
@@ -48,6 +48,10 @@ public class VerseService {
 		}
 		
 		return list;
+	}
+	
+	public List<Integer> getDistinctChapter(Integer testament, Integer book) {
+		return repo.getDistinctChapter( testament,  book);
 	}
 
 }

@@ -21,7 +21,10 @@ public interface VerseRepository extends JpaRepository<Verse, Integer> {
 	List<Verse> searchByTestamentAndBook(Integer testament, Integer book);
 	
 	@Transactional(readOnly=true)
-	@Query("SELECT obj FROM Verse obj WHERE obj.testament.id = :testament and obj.book.id = :book and chapter = :chapter")
-	List<Verse> searchByTestamentAndBookAndChapter(Integer testament, Integer book, String chapter);
+	@Query("SELECT obj FROM Verse obj WHERE obj.testament.id = :testament and obj.book.id = :book and obj.chapter = :chapter")
+	List<Verse> searchByTestamentAndBookAndChapter(Integer testament, Integer book, Integer chapter);
 	
+	@Transactional(readOnly=true)
+	@Query("SELECT DISTINCT obj.chapter FROM Verse obj WHERE obj.testament.id = :testament and obj.book.id = :book order by obj.chapter")
+	List<Integer> getDistinctChapter(Integer testament, Integer book);
 }

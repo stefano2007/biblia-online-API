@@ -48,11 +48,10 @@ public class VerseResource {
 	public ResponseEntity<List<VerseDTO>> search(
 			@RequestParam(value="testamentId", defaultValue="1") Integer testamentId, 
 			@RequestParam(value="bookId", defaultValue="0") Integer bookId, 
-			@RequestParam(value="chapter", defaultValue="") String chapter
+			@RequestParam(value="chapter", defaultValue="0") Integer chapter
 			) {		
 		List<Verse> list = service.search(testamentId, bookId, chapter);	
 		List<VerseDTO> listDto = list.stream().map(t -> new VerseDTO(t)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDto);
 	}	
-	
 }

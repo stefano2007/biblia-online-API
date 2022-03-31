@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +16,9 @@ import org.springframework.http.ResponseEntity;
 
 import com.stefanosilva.bibliaonline.domain.Book;
 import com.stefanosilva.bibliaonline.dto.BookDTO;
+import com.stefanosilva.bibliaonline.dto.ListCharpterDTO;
 import com.stefanosilva.bibliaonline.services.BookService;
+import com.stefanosilva.bibliaonline.services.VerseService;
 
 @RestController
 @RequestMapping(value="/v1/books")
@@ -23,6 +26,9 @@ public class BookResource {
 
 	@Autowired
     public BookService service;
+	
+	@Autowired
+    public VerseService serviceVerse;
    
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<Page<BookDTO>> findAll(Pageable page){
@@ -47,6 +53,21 @@ public class BookResource {
 		List<Book> list  = service.findByTestament(id);		
 		List<BookDTO> listDto = list.stream().map(t -> new BookDTO(t)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDto);
+	}
+
+	@RequestMapping(value="/charpters", method=RequestMethod.GET)
+	public ResponseEntity<ListCharpterDTO> getDistinctChapter(
+			@RequestParam(value="testamentId", defaultValue="1") Integer testamentId, 
+			@RequestParam(value="bookId", defaultValue="0") Integer bookId
+			) {		
+		ListCharpterDTO dto = new ListCharpterDTO();
+		
+		BookDTO book = new  BookDTO(service.findById(bookId));
+		List<Integer> list = serviceVerse.getDistinctChapter(testamentId, bookId);
+		
+		dto.setBook(book);
+		dto.setCharpters(list);
+		return ResponseEntity.ok().body(dto);
 	}
 	
 }

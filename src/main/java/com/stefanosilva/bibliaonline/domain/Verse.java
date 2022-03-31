@@ -31,14 +31,14 @@ public class Verse implements Serializable{
 	
 	private String version;
 	
-	private String chapter;
+	private Integer chapter;
 	
-	private String verse;
+	private Integer verse;
 	
 	@Column(length = 1000)
 	private String text;
 
-	public Verse(Integer id, Testament testament, Book book, String version, String chapter, String verse,
+	public Verse(Integer id, Testament testament, Book book, String version, Integer chapter, Integer verse,
 			String text) {
 		super();
 		this.id = id;
@@ -74,16 +74,16 @@ public class Verse implements Serializable{
 	public void setVersion(String version) {
 		this.version = version;
 	}
-	public String getChapter() {
+	public Integer getChapter() {
 		return chapter;
 	}
-	public void setChapter(String chapter) {
+	public void setChapter(Integer chapter) {
 		this.chapter = chapter;
 	}
-	public String getVerse() {
+	public Integer getVerse() {
 		return verse;
 	}
-	public void setVerse(String verse) {
+	public void setVerse(Integer verse) {
 		this.verse = verse;
 	}
 	public String getText() {
