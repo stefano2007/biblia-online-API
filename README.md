@@ -16,7 +16,6 @@ create database bibia_online;
 ```
 
 ## Fonte de Dados
-
 O script SQL conseguir no projeto GitHUB [thiagobodruk](https://github.com/thiagobodruk/biblia)
 
 ## Endpoints

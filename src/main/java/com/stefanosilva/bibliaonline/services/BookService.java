@@ -29,7 +29,7 @@ public class BookService {
 	public Book findById(Integer id) {
 		Optional <Book> obj = repo.findById(id);
 		
-		if (obj != null) {
+		if (obj.isPresent()) {
 			return obj.get();
 		}
 		return null;

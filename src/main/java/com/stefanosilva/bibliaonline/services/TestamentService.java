@@ -24,7 +24,7 @@ public class TestamentService {
 	public Testament findById(Integer id) {
 		Optional<Testament> obj = repo.findById(id);
 		
-		if (obj != null) {			
+		if (obj.isPresent()) {		
 			return obj.get();
 		}
 		return null;

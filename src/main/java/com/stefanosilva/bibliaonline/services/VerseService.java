@@ -27,7 +27,7 @@ public class VerseService {
 	public Verse findById(Integer id) {
 		Optional<Verse> obj = repo.findById(id);
 
-		if (obj != null) {
+		if (obj.isPresent()) {
 			return obj.get();
 		}
 		return null;
