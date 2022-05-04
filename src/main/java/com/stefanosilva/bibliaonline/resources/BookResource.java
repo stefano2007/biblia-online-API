@@ -3,6 +3,7 @@ package com.stefanosilva.bibliaonline.resources;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,12 +30,15 @@ public class BookResource {
 	
 	@Autowired
     public VerseService serviceVerse;
-   
+
+	@Autowired
+	ModelMapper modelMapper;
+
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<Page<BookDTO>> findAll(Pageable page){
 		Page<Book> list = service.findAll(page);		
 		
-		Page<BookDTO> listDto = list.map(t -> new BookDTO(t));
+		Page<BookDTO> listDto = list.map(t -> fromObj(t));
 		return ResponseEntity.ok().body(listDto);
 	}
 	
@@ -44,14 +48,14 @@ public class BookResource {
 		if(obj == null) {
 			return  ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-		BookDTO dto = new BookDTO(obj);
+		BookDTO dto = fromObj(obj);
 		return ResponseEntity.ok().body(dto);
 	}		
 	
 	@RequestMapping(value="/testament/{id}", method=RequestMethod.GET)
 	public ResponseEntity<List<BookDTO>> findByTestament(@PathVariable Integer id) {
 		List<Book> list  = service.findByTestament(id);		
-		List<BookDTO> listDto = list.stream().map(t -> new BookDTO(t)).collect(Collectors.toList());
+		List<BookDTO> listDto = list.stream().map(t -> fromObj(t)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDto);
 	}
 
@@ -62,12 +66,16 @@ public class BookResource {
 			) {		
 		ListCharpterDTO dto = new ListCharpterDTO();
 		
-		BookDTO book = new  BookDTO(service.findById(bookId));
+		BookDTO book = fromObj(service.findById(bookId));
 		List<Integer> list = serviceVerse.getDistinctChapter(testamentId, bookId);
 		
 		dto.setBook(book);
 		dto.setCharpters(list);
 		return ResponseEntity.ok().body(dto);
 	}
-	
+
+	public BookDTO fromObj(Book obj){
+		return modelMapper.map(obj, BookDTO.class);
+	}
+
 }

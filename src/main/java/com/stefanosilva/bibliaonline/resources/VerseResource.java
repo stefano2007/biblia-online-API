@@ -3,6 +3,7 @@ package com.stefanosilva.bibliaonline.resources;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,13 +24,17 @@ import com.stefanosilva.bibliaonline.services.VerseService;
 public class VerseResource {
 
 	@Autowired
-    public VerseService service;   
-	
+    public VerseService service;
+
+	@Autowired
+	ModelMapper modelMapper;
+
+
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<Page<VerseDTO>> findAll(Pageable page){
 		Page<Verse> list = service.findAll(page);		
 		
-		Page<VerseDTO> listDto = list.map(t -> new VerseDTO(t));
+		Page<VerseDTO> listDto = list.map(t -> fromObj(t));
 		return ResponseEntity.ok().body(listDto);
 	}
 	
@@ -39,7 +44,7 @@ public class VerseResource {
 		if(obj == null) {
 			return  ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-		VerseDTO dto = new VerseDTO(obj);
+		VerseDTO dto = fromObj(obj);
 		return ResponseEntity.ok().body(dto);
 	}	
 	
@@ -51,7 +56,11 @@ public class VerseResource {
 			@RequestParam(value="chapter", defaultValue="0") Integer chapter
 			) {		
 		List<Verse> list = service.search(testamentId, bookId, chapter);	
-		List<VerseDTO> listDto = list.stream().map(t -> new VerseDTO(t)).collect(Collectors.toList());
+		List<VerseDTO> listDto = list.stream().map(t -> fromObj(t)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDto);
-	}	
+	}
+
+	public VerseDTO fromObj(Verse obj){
+		return modelMapper.map(obj, VerseDTO.class);
+	}
 }
